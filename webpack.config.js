@@ -2,7 +2,6 @@ const path = require('path');
 const MiniCSSExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = (env) => {
-  const isProduction = env === "production"
   const CSSExtract = new MiniCSSExtractPlugin({filename: "styles.css"})
 
   return {
@@ -38,7 +37,7 @@ module.exports = (env) => {
     plugins: [
       CSSExtract
     ],
-    devtool: isProduction ? "source-map" : 'inline-source-map',
+    devtool: "source-map",
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true
