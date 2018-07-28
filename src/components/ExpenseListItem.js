@@ -8,9 +8,9 @@ const ExpenseListItem = (props) => {
 		<div>
 			<h3>{props.description} <Link to={`/edit/${props.id}`}>Edit</Link></h3> 
 			<p>
-				{numeral(props.amount / 100).format("$0,0.00")} - 
-				{moment(props.createdAt).format("MMMM Do, YYYY")} -
-				{props.moment}
+				{numeral(props.amount / 100).format("$0,0.00")} -- 
+				{moment(props.createdAt).format("MMMM Do, YYYY")} -- 
+				{props.note}
 			</p>
 		</div>
 	)
