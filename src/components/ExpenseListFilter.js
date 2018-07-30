@@ -15,8 +15,8 @@ class ExpenseListFilter extends React.Component{
 	//this function is called by the react-dates library and by default it passes in an object
 	//we destructured the object to obtain both the field names and values
 	onDatesChange = ({ startDate, endDate }) => {
-		this.props.dispatch(setStartDate(startDate))
-		this.props.dispatch(setEndDate(endDate))
+		this.props.setStartDate(startDate)
+		this.props.setEndDate(endDate)
 	}
 
 	onFocusChange = (calendarFocused) => {
@@ -27,24 +27,28 @@ class ExpenseListFilter extends React.Component{
 		})
 	}
 
+	onTextChange = (event) => {
+		this.props.setTextFilter(event.target.value)
+	}
+
+	onSortChange = (event) => {
+		if(event.target.value === "date"){
+			this.props.sortByDate()
+		} else if(event.target.value === "amount"){
+			this.props.sortByAmount()
+		}
+	}
+
 	render(){
 		return(
 			<div>
 				<input 
 					type="text" 
 					value={this.props.filters.text}
-					onChange={(event) => {
-						this.props.dispatch(setTextFilter(event.target.value))
-					}}
+					onChange={this.onTextChange}
 				/>
 				<select
-					onChange={(event) => {
-						if(event.target.value === "date"){
-							this.props.dispatch(sortByDate())
-						} else if(event.target.value === "amount"){
-							this.props.dispatch(sortByAmount())
-						}
-					}}
+					onChange={this.onSortChange}
 					value={this.props.filters.sortBy}
 				>
 					<option value="date">Date</option>
@@ -76,4 +80,25 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps)(ExpenseListFilter)
+const mapDispatchToProps = (dispatch) => {
+	return{
+		setTextFilter: (text) => {
+			dispatch(setTextFilter(text))
+		},
+		sortByDate: () => {
+			dispatch(sortByDate())
+		},
+		sortByAmount: () => {
+			dispatch(sortByAmount())
+		},
+		setStartDate: (startDate) => {
+			dispatch(setStartDate(startDate))
+		},
+		setEndDate: (endDate) => {
+			dispatch(setEndDate(endDate))
+		}
+
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseListFilter)
