@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import database from "../firebase/firebase"
 
-// ADD_EXPENSE
+// ADD_EXPENSE to our local redux
 export const addExpense = (expense) => {
   return{
     type: "ADD_EXPENSE",
@@ -23,8 +23,7 @@ export const startAddExpense = ({description = "", note = "", amount = 0, create
   }
 }
 
-
-// REMOVE_EXPENSE
+// REMOVE_EXPENSE from our local redux
 export const removeExpense = (id) => {
   return{
     type: "REMOVE_EXPENSE",
@@ -32,7 +31,18 @@ export const removeExpense = (id) => {
   }
 }
 
-// EDIT_EXPENSE
+
+//removes an expense from firebase and dispatches our remove expense action creator
+export const startRemoveExpense = (id) => {
+  return(dispatch) => {
+    return database.ref(`expenses/${id}`).remove().then(() => {
+      dispatch(removeExpense(id))
+    })
+  }
+}
+
+
+// EDIT_EXPENSE in our local redux
 export const editExpense = (id, updates) => {
   return{
     type: 'EDIT_EXPENSE',
@@ -41,3 +51,38 @@ export const editExpense = (id, updates) => {
   }
 }
 
+//edit an expense on firebase then dispatch our edit expense action creator
+export const startEditExpense = (id, updates) => {
+  return (dispatch) => {
+    return database.ref(`expenses/${id}`).update(updates).then(() => {
+      dispatch(editExpense(id, updates))
+    })
+  }
+}
+
+//SET_EXPENSES to be displayed when the application loads
+export const setExpenses = (expenses) => {
+  return{
+    type: "SET_EXPENSES",
+    expenses
+  }
+}
+
+
+//retrieves all expenses from firebase then dospatches our set expenses action creator
+export const startSetExpenses = () => {
+  return (dispatch) => {
+    return database.ref("expenses").once("value").then((snapshot) => {
+      const expenses = [];
+
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        })
+      })
+
+      dispatch(setExpenses(expenses))
+    })
+  }
+}
