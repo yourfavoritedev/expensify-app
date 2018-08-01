@@ -1,0 +1,49 @@
+.login-button{
+	background: $solid-blue;
+	color: #fff;
+	padding: $s-size;
+	font-size: $font-size-large;
+	font-weight: 300;
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+	line-height: 1;
+}
+
+.login-button:hover{
+	background: darken($solid-blue, 10%);
+}
+
+.logout-button{
+	background: transparent;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #fff;
+	font-size: $font-size-large;
+	border: none;
+}
+
+.create-button{
+	background: $blue-green;
+	color: #fff;
+	padding: $s-size;
+	font-size: $font-size-large;
+	font-weight: 300;
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+	line-height: 1;
+}
+
+.create-button:hover{
+	background: darken($blue-green, 10%)
+}
+
+.remove-button{
+	@extend .create-button;
+	background: #888;
+}
+
+.remove-button:hover{
+	background: darken(#888, 10%)
+}

@@ -2,21 +2,28 @@
 
 exports[`should render ExpenseListItems 1`] = `
 <div>
-  <h3>
-    rent
-     
-    <Link
-      replace={false}
-      to="/edit/1"
+  <Link
+    className="list-item"
+    replace={false}
+    to="/edit/1"
+  >
+    <div>
+      <h3
+        className="list-item__title"
+      >
+        rent
+      </h3>
+      <span
+        className="list-item__subtitle"
+      >
+        December 31st, 1969
+      </span>
+    </div>
+    <h3
+      className="list-item__data"
     >
-      Edit
-    </Link>
-  </h3>
-  <p>
-    $1.00
-     --
-    December 31st, 1969
-     --
-  </p>
+      $1.00
+    </h3>
+  </Link>
 </div>
 `;

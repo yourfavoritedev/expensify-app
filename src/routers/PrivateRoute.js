@@ -9,16 +9,22 @@ import Header from "../components/Header"
 //...rest just refers to all the other props being passed down from AppRouter
 export const PrivateRoute = ({ isAuthenticated, component: Component, ...rest}) => {
 	return(
-		<Route {...rest} component={(props) => (
-			isAuthenticated ? (
+		<Route {...rest} component={(props) => {
+			return(
 				<div>
-					<Header/>
-					<Component {...props} />
+					{
+						isAuthenticated ? (
+						<div>
+							<Header/>
+							<Component {...props} />
+						</div>
+					) : (
+						<Redirect to="/" />
+						)
+					}			
 				</div>
-			) : (
-				<Redirect to="/" />
-				)
-		)}/>
+			)
+		}}/>
 	)
 }
 
